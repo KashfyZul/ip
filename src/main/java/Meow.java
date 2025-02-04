@@ -9,39 +9,54 @@ public class Meow {
             line = in.nextLine();
         }
     }
-    public static void addList(String[] list) {
+    public static void addList(Task[] list) {
         System.out.println("Type to add items to the list! add tuna to exit!");
 
+//        int listCount = 0;
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        int listCount = 0;
+        Task currTask = new Task(line);
 
         while (!line.equals("add tuna")) { // "bye" to exit
-            if (listCount > 100) {
+            if (Task.getTaskListSize() > 100) {
                 System.out.println("Mreoww! This list is full!");
                 return;
             }
             else if (line.equals("list")) {
-                if (listCount == 0) {
+                if (Task.getTaskListSize() == 0) {
                     System.out.println("This list is empty! YEET");
                 }
                 else {
-                    int itemCount = 1;
-                    while (itemCount <= listCount) {
-                        System.out.println(Integer.toString(itemCount) + ". " + list[itemCount - 1]);
-                        itemCount++;
+                    System.out.println("Here are your tasks!");
+                    for (Task t: list) {
+                        if (t == null) {
+                            break;
+                        }
+                        System.out.println(Integer.toString(t.getTaskNumber()) + ".[" + t.getStatusIcon() + "] " + t.getTaskName());
                     }
                 }
             }
+            else if (line.startsWith("mark")) {
+                int taskToMark = Integer.parseInt(line.substring(line.length() - 1));
+                list[taskToMark - 1].setDone();
+                System.out.println("Meow meow this task is done");
+                System.out.println("[" + list[taskToMark - 1].getStatusIcon() + "] " + list[taskToMark - 1].getTaskName());
+            }
+            else if (line.startsWith("unmark")) {
+                int taskToMark = Integer.parseInt(line.substring(line.length() - 1));
+                list[taskToMark - 1].setNotDone();
+                System.out.println("meowwww didn't you complete this task?");
+                System.out.println("[" + list[taskToMark - 1].getStatusIcon() + "] " + list[taskToMark - 1].getTaskName());
+            }
             else {
                 System.out.println("_____________________________________");
-                list[listCount] = line;
-                listCount++;
+                list[Task.getTaskListSize() - 1] = currTask;
                 System.out.println("added: " + line);
             }
             System.out.println("_____________________________________");
             line = in.nextLine();
+            currTask = new Task(line);
         }
     }
     public static void main(String[] args) {
@@ -60,7 +75,7 @@ public class Meow {
         System.out.println("Hello from\n \n" + meow + chatbotName);
         System.out.println("Please leave some tuna before u leave. Meow");
         System.out.println("_____________________________________");
-        String[] list = new String[100];
+        Task[] list = new Task[100];
 
 
 //        echo(line, in);
