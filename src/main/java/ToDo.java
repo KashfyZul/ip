@@ -1,4 +1,19 @@
-package PACKAGE_NAME;
+public class ToDo extends Task {
 
-public class ToDo {
+    public void printTask() {
+        System.out.println("[" + this.getTaskType() + "]"
+                + "[" + this.getStatusIcon() + "] "
+                + this.getTaskName());
+    }
+
+    public void printTaskAdded() {
+        System.out.println("Meowss. Added this task: ");
+        printTask();
+    }
+
+    public ToDo(String taskName) {
+        super(taskName);
+        this.setTaskType('T');
+        this.printTaskAdded();
+    }
 }

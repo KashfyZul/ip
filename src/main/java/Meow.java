@@ -32,7 +32,8 @@ public class Meow {
                 if (t == null) {
                     break;
                 }
-                System.out.println(Integer.toString(t.getTaskNumber()) + ".[" + t.getStatusIcon() + "] " + t.getTaskName());
+                System.out.print(Integer.toString(t.getTaskNumber()) + ".");
+                printAnyTask(t);
             }
         }
     }
@@ -55,8 +56,24 @@ public class Meow {
             taskToMark.setNotDone();
             System.out.println("meowwww didn't you complete this task?");
         }
+        printAnyTask(taskToMark);
+    }
 
-        System.out.println("[" + taskToMark.getStatusIcon() + "] " + taskToMark.getTaskName());
+    private static void printAnyTask(Task taskToMark) {
+        // print out the task once marked/unmarked
+        switch (taskToMark.getTaskType()) {
+        case 'E':
+            ((Event) taskToMark).printTask();
+            break;
+        case 'D':
+            ((Deadline) taskToMark).printTask();
+            break;
+        case 'T':
+            ((ToDo) taskToMark).printTask();
+            break;
+        default:
+            break;
+        }
     }
 
     public static void addTask(String line, Task currTask, Task[] list) {
@@ -67,25 +84,74 @@ public class Meow {
 
     public static void taskList(Task[] list) {
         System.out.println("Type to add items to the list! add tuna to exit!");
+        String taskType;
         String line = "";
         Task currTask;
 
         while (!line.equals(EXIT_PHRASE)) { // "bye" to exit
             line = getUserInput();
-            currTask = new Task(line);
+
             if (Task.getTaskListSize() > MAX_LIST_SIZE) {
                 System.out.println("Mreoww! This list is full!");
-                return;
+                System.out.println(LINE_SEPARATOR);
+                continue;
             } else if (line.equals("list")) {
                 listAllTasks(list);
+                System.out.println(LINE_SEPARATOR);
+                continue;
             } else if (line.contains("mark")) {
                 markOrUnmark(line, list);
-            } else {
-                addTask(line, currTask, list);
+                System.out.println(LINE_SEPARATOR);
+                continue;
             }
+
+            if (line.startsWith("deadline")) {
+                makeNewDeadline(line, list);
+            } else if (line.startsWith("event")) {
+                makeNewEvent(line, list);
+            } else if (line.startsWith("todo")) {
+                taskType = "todo";
+                makeNewToDo(line, list);
+            } else {
+                System.out.println("Meow? I don't understand that");
+                System.out.println(("Begin your task with 'todo', 'event' or 'deadline'"));
+                continue;
+            }
+            
+            System.out.println("Now you have " + Task.getTaskListSize() + " task(s) in the list");
             System.out.println(LINE_SEPARATOR);
 
         }
+    }
+
+    private static void makeNewEvent(String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "event ".length();
+        int taskNameEnd = line.indexOf('/');
+        String taskName = line.substring(taskNameStart, taskNameEnd);
+        String from = line.substring(taskNameEnd + "from ".length(), line.lastIndexOf('/') - 1);
+        int toStart = line.lastIndexOf('/') + "to ".length();
+        String to = line.substring(toStart);
+        currTask = new Event(taskName, from, to);
+        list[Task.getTaskListSize() - 1] = currTask;
+    }
+
+    private static void makeNewToDo(String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "todo ".length();
+        String taskName = line.substring(taskNameStart);
+        currTask = new ToDo(taskName);
+        list[Task.getTaskListSize() - 1] = currTask;
+    }
+
+    private static void makeNewDeadline(String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "deadline ".length();
+        int taskNameEnd = line.indexOf('/');
+        String taskName = line.substring(taskNameStart, taskNameEnd);
+        String by = line.substring(taskNameEnd + "by ".length());
+        currTask = new Deadline(taskName, by);
+        list[Task.getTaskListSize() - 1] = currTask;
     }
 
     public static void openingMsg() {

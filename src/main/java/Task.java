@@ -20,18 +20,8 @@ public class Task {
         return taskType;
     }
 
-    public void setTaskType(String taskType) {
-        char type = ' ';
-        if (taskType.equals("todo")) {
-            type = 'T';
-        }
-        else if (taskType.equals("deadline")) {
-            type = 'D';
-        }
-        else if (taskType.equals("event")) {
-            type = 'E';
-        }
-        this.taskType = type;
+    public void setTaskType(char taskType) {
+        this.taskType = taskType;
     }
 
     public String getStatusIcon() {
