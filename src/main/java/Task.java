@@ -1,5 +1,6 @@
 public class Task {
     private String taskName;
+    private char taskType;
     private boolean isDone;
     private int taskNumber;
     private static int taskListSize = 0;
@@ -15,6 +16,24 @@ public class Task {
         return taskName;
     }
 
+    public char getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        char type = ' ';
+        if (taskType.equals("todo")) {
+            type = 'T';
+        }
+        else if (taskType.equals("deadline")) {
+            type = 'D';
+        }
+        else if (taskType.equals("event")) {
+            type = 'E';
+        }
+        this.taskType = type;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
@@ -24,6 +43,10 @@ public class Task {
     }
     public void setNotDone() {
         isDone = false;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public int getTaskNumber() {

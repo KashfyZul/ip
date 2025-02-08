@@ -1,88 +1,110 @@
 import java.util.Scanner;
 
 public class Meow {
+
+    public static final String EXIT_PHRASE = "add tuna";
+    public static final String LINE_SEPARATOR = "_____________________________________";
+    public static final int MAX_LIST_SIZE = 100;
+    public static final String CHATBOT_NAME = "Meow";
+
     public static void echo(String line, Scanner in) {
-        while (!line.equals("bye")) {
-            System.out.println("_____________________________________");
+        while (!line.equals(EXIT_PHRASE)) {
+            System.out.println(LINE_SEPARATOR);
             System.out.println(line);
-            System.out.println("_____________________________________");
+            System.out.println(LINE_SEPARATOR);
             line = in.nextLine();
         }
     }
-    public static void addList(Task[] list) {
-        System.out.println("Type to add items to the list! add tuna to exit!");
 
-//        int listCount = 0;
+    public static String getUserInput() {
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
-        Task currTask = new Task(line);
+        return line;
+    }
 
-        while (!line.equals("add tuna")) { // "bye" to exit
-            if (Task.getTaskListSize() > 100) {
-                System.out.println("Mreoww! This list is full!");
-                return;
-            }
-            else if (line.equals("list")) {
-                if (Task.getTaskListSize() == 0) {
-                    System.out.println("This list is empty! YEET");
+    public static void listAllTasks(Task[] list) {
+        if (Task.getTaskListSize() == 0) {
+            System.out.println("This list empty! YEET");
+        } else {
+            System.out.println("Here are your tasks!");
+            for (Task t : list) {
+                if (t == null) {
+                    break;
                 }
-                else {
-                    System.out.println("Here are your tasks!");
-                    for (Task t: list) {
-                        if (t == null) {
-                            break;
-                        }
-                        System.out.println(Integer.toString(t.getTaskNumber()) + ".[" + t.getStatusIcon() + "] " + t.getTaskName());
-                    }
-                }
+                System.out.println(Integer.toString(t.getTaskNumber()) + ".[" + t.getStatusIcon() + "] " + t.getTaskName());
             }
-            else if (line.startsWith("mark")) {
-                int taskToMark = Integer.parseInt(line.substring(line.length() - 1));
-                list[taskToMark - 1].setDone();
-                System.out.println("Meow meow this task is done");
-                System.out.println("[" + list[taskToMark - 1].getStatusIcon() + "] " + list[taskToMark - 1].getTaskName());
-            }
-            else if (line.startsWith("unmark")) {
-                int taskToMark = Integer.parseInt(line.substring(line.length() - 1));
-                list[taskToMark - 1].setNotDone();
-                System.out.println("meowwww didn't you complete this task?");
-                System.out.println("[" + list[taskToMark - 1].getStatusIcon() + "] " + list[taskToMark - 1].getTaskName());
-            }
-            else {
-                System.out.println("_____________________________________");
-                list[Task.getTaskListSize() - 1] = currTask;
-                System.out.println("added: " + line);
-            }
-            System.out.println("_____________________________________");
-            line = in.nextLine();
-            currTask = new Task(line);
         }
     }
-    public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
 
-        String chatbotName = "Meow";
+    public static void markOrUnmark(String line, Task[] list) {
+        int taskNumber = Integer.parseInt(line.substring(line.length() - 1));
+        Task taskToMark = list[taskNumber - 1];
+        if (line.startsWith("mark")) {
+            if (taskToMark.isDone()) {
+                System.out.println("This task is already done!");
+                return;
+            }
+            taskToMark.setDone();
+            System.out.println("Meow meow this task is done");
+        } else if (line.startsWith("unmark")) {
+            if (!taskToMark.isDone()) {
+                System.out.println("This task is already set as not done");
+                return;
+            }
+            taskToMark.setNotDone();
+            System.out.println("meowwww didn't you complete this task?");
+        }
 
-        String meow =" /\\_/\\ \n"
-        + "( o.o ) \n"
-        + " > ^ < \n";
+        System.out.println("[" + taskToMark.getStatusIcon() + "] " + taskToMark.getTaskName());
+    }
 
-        System.out.println("Hello from\n \n" + meow + chatbotName);
+    public static void addTask(String line, Task currTask, Task[] list) {
+        System.out.println(LINE_SEPARATOR);
+        list[Task.getTaskListSize() - 1] = currTask;
+        System.out.println("added: " + line);
+    }
+
+    public static void taskList(Task[] list) {
+        System.out.println("Type to add items to the list! add tuna to exit!");
+        String line = "";
+        Task currTask;
+
+        while (!line.equals(EXIT_PHRASE)) { // "bye" to exit
+            line = getUserInput();
+            currTask = new Task(line);
+            if (Task.getTaskListSize() > MAX_LIST_SIZE) {
+                System.out.println("Mreoww! This list is full!");
+                return;
+            } else if (line.equals("list")) {
+                listAllTasks(list);
+            } else if (line.contains("mark")) {
+                markOrUnmark(line, list);
+            } else {
+                addTask(line, currTask, list);
+            }
+            System.out.println(LINE_SEPARATOR);
+
+        }
+    }
+
+    public static void openingMsg() {
+        String meow = " /\\_/\\ \n"
+                + "( o.o ) \n"
+                + " > ^ < \n";
+
+        System.out.println("Hello from\n \n" + meow + CHATBOT_NAME);
         System.out.println("Please leave some tuna before u leave. Meow");
-        System.out.println("_____________________________________");
+        System.out.println(LINE_SEPARATOR);
+    }
+
+    public static void main(String[] args) {
+        openingMsg();
         Task[] list = new Task[100];
+        taskList(list);
 
-
-//        echo(line, in);
-        addList(list);
-
-        System.out.println("_____________________________________");
+        System.out.println(LINE_SEPARATOR);
         System.out.println("Meow. See you!");
-        System.out.println("_____________________________________");
+        System.out.println(LINE_SEPARATOR);
     }
 }
