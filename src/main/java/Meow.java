@@ -1,3 +1,9 @@
+import meow.exception.MeowException;
+import meow.task.Deadline;
+import meow.task.Event;
+import meow.task.Task;
+import meow.task.ToDo;
+
 import java.util.Scanner;
 
 public class Meow {
@@ -16,7 +22,7 @@ public class Meow {
         }
     }
 
-    public static void checkValidInput(String input) throws MeowException{
+    public static void checkValidInput(String input) throws MeowException {
         String tasktype;
         int firstSpaceDex = input.indexOf(" ");
 
