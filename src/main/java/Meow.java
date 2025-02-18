@@ -1,3 +1,9 @@
+import meow.exception.MeowException;
+import meow.task.Deadline;
+import meow.task.Event;
+import meow.task.Task;
+import meow.task.ToDo;
+
 import java.util.Scanner;
 
 public class Meow {
@@ -15,6 +21,34 @@ public class Meow {
             line = in.nextLine();
         }
     }
+
+    public static void checkValidInput(String input) throws MeowException {
+        String tasktype;
+        int firstSpaceDex = input.indexOf(" ");
+
+        // handle errors if there is no whitespace after the first word
+        if (firstSpaceDex == -1) {
+            if (input.equals("deadline") || input.equals("event") || input.equals("todo")) {
+                throw new MeowException("Nyan, the description of a " + input + " cannot be empty :(");
+            } else {
+                // invalid input: neither deadline nor event nor todo
+                throw new MeowException("Meow? I don't understand that");
+            }
+        }
+        String firstWord = input.substring(0, firstSpaceDex);
+        if (firstWord.equals("deadline") || firstWord.equals("event") || firstWord.equals("todo")) {
+            tasktype = firstWord;
+        } else {
+            // invalid input: neither deadline nor event nor todo
+            throw new MeowException("Meow? I don't understand that");
+        }
+        String description = input.substring(firstSpaceDex);
+        // empty strings or only whitespace strings will be returned as false
+        if (description.isBlank()) {
+            throw new MeowException("Nyan, the description of a " + tasktype + " cannot be empty :(");
+        }
+    }
+
 
     public static String getUserInput() {
         String line;
@@ -105,20 +139,29 @@ public class Meow {
                 continue;
             }
 
+            // handle erroneous input
+            try {
+                checkValidInput(line);
+            } catch (MeowException e) {
+                System.out.println("Caught exception: " + e.getMessage());
+                System.out.println(LINE_SEPARATOR);
+                continue;
+            }
+
+            // make new task based on user description
             if (line.startsWith("deadline")) {
                 makeNewDeadline(line, list);
             } else if (line.startsWith("event")) {
                 makeNewEvent(line, list);
             } else if (line.startsWith("todo")) {
-                taskType = "todo";
                 makeNewToDo(line, list);
             } else {
                 System.out.println("Meow? I don't understand that");
                 System.out.println(("Begin your task with 'todo', 'event' or 'deadline'"));
                 continue;
             }
-            
-            System.out.println("Now you have " + Task.getTaskListSize() + " task(s) in the list");
+
+            System.out.println("You currently have " + Task.getTaskListSize() + " task(s) in the list");
             System.out.println(LINE_SEPARATOR);
 
         }
@@ -169,7 +212,6 @@ public class Meow {
         Task[] list = new Task[100];
         taskList(list);
 
-        System.out.println(LINE_SEPARATOR);
         System.out.println("Meow. See you!");
         System.out.println(LINE_SEPARATOR);
     }

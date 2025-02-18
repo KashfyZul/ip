@@ -1,9 +1,13 @@
-public class ToDo extends Task {
+package meow.task;
+
+public class Deadline extends Task {
+    private String by;
 
     public void printTask() {
         System.out.println("[" + this.getTaskType() + "]"
                 + "[" + this.getStatusIcon() + "] "
-                + this.getTaskName());
+                + this.getTaskName()
+                + "(by:" + this.by + ")");
     }
 
     public void printTaskAdded() {
@@ -11,9 +15,10 @@ public class ToDo extends Task {
         printTask();
     }
 
-    public ToDo(String taskName) {
+    public Deadline(String taskName, String by) {
         super(taskName);
-        this.setTaskType('T');
+        this.by = by;
+        this.setTaskType('D');
         this.printTaskAdded();
     }
 }
