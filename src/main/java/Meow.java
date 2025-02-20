@@ -93,6 +93,22 @@ public class Meow {
         printAnyTask(taskToMark);
     }
 
+    public static void delete(String line, Task[] list) {
+        int taskNumber = Integer.parseInt(line.substring(line.length() - 1)) - 1;
+        Task taskToMark = list[taskNumber];
+        System.out.println("Okie, this task has been removed: ");
+        printAnyTask(taskToMark);
+
+        while (list[taskNumber] != null) {
+            list[taskNumber].setTaskNumber(list[taskNumber].getTaskNumber() - 1);
+            list[taskNumber] = list[taskNumber + 1];
+            taskNumber++;
+        }
+        Task.decrementTaskListSize();
+        System.out.println(LINE_SEPARATOR);
+    }
+
+
     private static void printAnyTask(Task taskToMark) {
         // print out the task once marked/unmarked
         switch (taskToMark.getTaskType()) {
@@ -137,6 +153,10 @@ public class Meow {
                 markOrUnmark(line, list);
                 System.out.println(LINE_SEPARATOR);
                 continue;
+            } else if (line.startsWith("delete")) {
+                delete(line, list);
+                printHowManyTasks();
+                continue;
             }
 
             // handle erroneous input
@@ -161,10 +181,14 @@ public class Meow {
                 continue;
             }
 
-            System.out.println("You currently have " + Task.getTaskListSize() + " task(s) in the list");
+            printHowManyTasks();
             System.out.println(LINE_SEPARATOR);
 
         }
+    }
+
+    private static void printHowManyTasks() {
+        System.out.println("You currently have " + Task.getTaskListSize() + " task(s) in the list");
     }
 
     private static void makeNewEvent(String line, Task[] list) {
