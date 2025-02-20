@@ -45,7 +45,16 @@ public class Task {
         return taskNumber;
     }
 
+    public void setTaskNumber(int num) { taskNumber = num; }
+
+    public static void decrementTaskListSize() { taskListSize--; }
+
     public static int getTaskListSize() {
         return taskListSize;
     }
+
+    public static void setTaskListSize(int num) {
+        taskListSize = num;
+    }
+
 }
