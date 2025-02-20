@@ -8,6 +8,12 @@ public class ToDo extends Task {
                 + this.getTaskName());
     }
 
+    public String toString() {
+        return ("[" + this.getTaskType() + "]"
+                + "[" + this.getStatusIcon() + "] "
+                + this.getTaskName());
+    }
+
     public void printTaskAdded() {
         System.out.println("Meowss. Added this task: ");
         printTask();
