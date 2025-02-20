@@ -4,9 +4,16 @@ import meow.task.Event;
 import meow.task.Task;
 import meow.task.ToDo;
 
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
+
 public class Meow {
+
+    static final String outputFilePath = "src/main/java/meow/data/meowOutput.txt";
+    static String output = "";
 
     public static final String EXIT_PHRASE = "add tuna";
     public static final String LINE_SEPARATOR = "_____________________________________";
@@ -67,7 +74,7 @@ public class Meow {
                     break;
                 }
                 System.out.print(Integer.toString(t.getTaskNumber()) + ".");
-                printAnyTask(t);
+                System.out.println(stringAnyTask(t));
             }
         }
     }
@@ -90,9 +97,10 @@ public class Meow {
             taskToMark.setNotDone();
             System.out.println("meowwww didn't you complete this task?");
         }
-        printAnyTask(taskToMark);
+        System.out.println(stringAnyTask(taskToMark));
     }
 
+<<<<<<< .merge_file_Tom2Pf
     public static void delete(String line, Task[] list) {
         int taskNumber = Integer.parseInt(line.substring(line.length() - 1)) - 1;
         Task taskToMark = list[taskNumber];
@@ -110,20 +118,21 @@ public class Meow {
 
 
     private static void printAnyTask(Task taskToMark) {
+=======
+    private static String stringAnyTask(Task taskToMark) {
+>>>>>>> .merge_file_BEdgiL
         // print out the task once marked/unmarked
         switch (taskToMark.getTaskType()) {
         case 'E':
-            ((Event) taskToMark).printTask();
-            break;
+            return ((Event) taskToMark).toString();
         case 'D':
-            ((Deadline) taskToMark).printTask();
-            break;
+            return ((Deadline) taskToMark).toString();
         case 'T':
-            ((ToDo) taskToMark).printTask();
-            break;
+            return ((ToDo) taskToMark).toString();
         default:
             break;
         }
+        return "";
     }
 
     public static void addTask(String line, Task currTask, Task[] list) {
@@ -181,7 +190,18 @@ public class Meow {
                 continue;
             }
 
+<<<<<<< .merge_file_Tom2Pf
             printHowManyTasks();
+=======
+            try {
+                updateFile(list);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                break;
+            }
+
+            System.out.println("You currently have " + Task.getTaskListSize() + " task(s) in the list");
+>>>>>>> .merge_file_BEdgiL
             System.out.println(LINE_SEPARATOR);
 
         }
@@ -230,6 +250,33 @@ public class Meow {
         System.out.println("Please leave some tuna before u leave. Meow");
         System.out.println(LINE_SEPARATOR);
     }
+
+    private static void updateFile(Task[] list) throws IOException {
+        FileWriter out = new FileWriter(outputFilePath);
+        updateOutputList(list);
+        out.write(output);
+        out.close();
+    }
+
+    private static void updateOutputList(Task[] list) {
+        output = "";
+        for (Task task : list) {
+            if (task != null) {
+                output += task.toString() + "\n";
+            }
+        }
+    }
+
+//    private static String readFile(String filePath, int lineCount) {
+//        try (Scanner scanner = new Scanner(new File(filePath))) {
+//            while (scanner.hasNextLine()) {  // Read each line
+//                System.out.println(scanner.nextLine());
+//            }
+//        } catch (IOException e) {
+//            System.out.println("File not found or error reading file.");
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void main(String[] args) {
         openingMsg();

@@ -10,6 +10,13 @@ public class Deadline extends Task {
                 + "(by:" + this.by + ")");
     }
 
+    public String toString() {
+        return ("[" + this.getTaskType() + "]"
+                + "[" + this.getStatusIcon() + "] "
+                + this.getTaskName()
+                + "(by:" + this.by + ")");
+    }
+
     public void printTaskAdded() {
         System.out.println("Meowss. Added this task: ");
         printTask();

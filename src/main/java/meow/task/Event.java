@@ -12,6 +12,14 @@ public class Event extends Task {
                 + this.to + ")");
     }
 
+    public String toString() {
+        return ("[" + this.getTaskType() + "]"
+                + "[" + this.getStatusIcon() + "] "
+                + this.getTaskName()
+                + "(from:" + this.from + " to:"
+                + this.to + ")");
+    }
+
     public void printTaskAdded() {
         System.out.println("Meowss. Added this task: ");
         printTask();
