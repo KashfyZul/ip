@@ -12,7 +12,8 @@ import java.util.Scanner;
 
 public class Meow {
 
-    static final String outputFilePath = "src/main/java/meow/data/meowOutput.txt";
+//    static final String outputFilePath = "src/main/java/meow/data/meowOutput.txt";
+    static final String outputFilePath = "C:/Users/cyber/Documents/ip/src/main/java/meow/data/meowOutput.txt";
     static String output = "";
 
     public static final String EXIT_PHRASE = "add tuna";
@@ -100,12 +101,11 @@ public class Meow {
         System.out.println(stringAnyTask(taskToMark));
     }
 
-<<<<<<< .merge_file_Tom2Pf
     public static void delete(String line, Task[] list) {
         int taskNumber = Integer.parseInt(line.substring(line.length() - 1)) - 1;
         Task taskToMark = list[taskNumber];
         System.out.println("Okie, this task has been removed: ");
-        printAnyTask(taskToMark);
+        System.out.println(stringAnyTask(taskToMark));
 
         while (list[taskNumber] != null) {
             list[taskNumber].setTaskNumber(list[taskNumber].getTaskNumber() - 1);
@@ -117,10 +117,9 @@ public class Meow {
     }
 
 
-    private static void printAnyTask(Task taskToMark) {
-=======
+//    private static void printAnyTask(Task taskToMark) {
+
     private static String stringAnyTask(Task taskToMark) {
->>>>>>> .merge_file_BEdgiL
         // print out the task once marked/unmarked
         switch (taskToMark.getTaskType()) {
         case 'E':
@@ -190,9 +189,7 @@ public class Meow {
                 continue;
             }
 
-<<<<<<< .merge_file_Tom2Pf
-            printHowManyTasks();
-=======
+
             try {
                 updateFile(list);
             } catch (IOException e) {
@@ -200,8 +197,7 @@ public class Meow {
                 break;
             }
 
-            System.out.println("You currently have " + Task.getTaskListSize() + " task(s) in the list");
->>>>>>> .merge_file_BEdgiL
+            printHowManyTasks();
             System.out.println(LINE_SEPARATOR);
 
         }
