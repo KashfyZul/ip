@@ -1,2 +1,2 @@
-[T][ ] a
-[T][ ] b
+[T][X] read book
+[D][ ] return book (by: 6pm)

@@ -14,7 +14,7 @@ public class Meow {
 
 //    static final String outputFilePath = "src/main/java/meow/data/meowOutput.txt";
     static final String outputFilePath = "C:/Users/cyber/Documents/ip/src/main/java/meow/data/meowOutput.txt";
-    static String output = "";
+//    static String output = "";
 
     public static final String EXIT_PHRASE = "add tuna";
     public static final String LINE_SEPARATOR = "_____________________________________";
@@ -152,18 +152,30 @@ public class Meow {
             if (Task.getTaskListSize() > MAX_LIST_SIZE) {
                 System.out.println("Mreoww! This list is full!");
                 System.out.println(LINE_SEPARATOR);
+                if (updateFileWithCatch(list)) {
+                    break;
+                }
                 continue;
             } else if (line.equals("list")) {
                 listAllTasks(list);
                 System.out.println(LINE_SEPARATOR);
+                if (updateFileWithCatch(list)) {
+                    break;
+                }
                 continue;
             } else if (line.contains("mark")) {
                 markOrUnmark(line, list);
                 System.out.println(LINE_SEPARATOR);
+                if (updateFileWithCatch(list)) {
+                    break;
+                }
                 continue;
             } else if (line.startsWith("delete")) {
                 delete(line, list);
                 printHowManyTasks();
+                if (updateFileWithCatch(list)) {
+                    break;
+                }
                 continue;
             }
 
@@ -190,10 +202,7 @@ public class Meow {
             }
 
 
-            try {
-                updateFile(list);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            if (updateFileWithCatch(list)) {
                 break;
             }
 
@@ -201,6 +210,16 @@ public class Meow {
             System.out.println(LINE_SEPARATOR);
 
         }
+    }
+
+    private static boolean updateFileWithCatch(Task[] list) {
+        try {
+            updateFile(list);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return true;
+        }
+        return false;
     }
 
     private static void printHowManyTasks() {
@@ -249,18 +268,19 @@ public class Meow {
 
     private static void updateFile(Task[] list) throws IOException {
         FileWriter out = new FileWriter(outputFilePath);
-        updateOutputList(list);
+        String output = updateOutputList(list);
         out.write(output);
         out.close();
     }
 
-    private static void updateOutputList(Task[] list) {
-        output = "";
+    private static String updateOutputList(Task[] list) {
+        String output = "";
         for (Task task : list) {
             if (task != null) {
                 output += task.toString() + "\n";
             }
         }
+        return output;
     }
 
 //    private static String readFile(String filePath, int lineCount) {
