@@ -4,9 +4,7 @@ import meow.task.Event;
 import meow.task.Task;
 import meow.task.ToDo;
 
-import java.io.FileWriter;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 
@@ -146,6 +144,11 @@ public class Meow {
         String line = "";
         Task currTask;
 
+        try {
+            readTask(readFile(), list);
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("Output txt file not found");
+        }
         while (!line.equals(EXIT_PHRASE)) { // "bye" to exit
             line = getUserInput();
 
@@ -238,10 +241,29 @@ public class Meow {
         list[Task.getTaskListSize() - 1] = currTask;
     }
 
+    private static void makeExistingEvent (String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "[E][ ] ".length();
+        int taskNameEnd = line.indexOf('(');
+        String taskName  = line.substring(taskNameStart, taskNameEnd);
+        String from = line.substring(line.indexOf(':') + 1, line.lastIndexOf(':') - 4);
+        String to = line.substring(line.lastIndexOf(':') + 1, line.lastIndexOf(')'));
+        currTask = new Event(taskName, from, to);
+        list[Task.getTaskListSize() - 1] = currTask;
+    }
+
     private static void makeNewToDo(String line, Task[] list) {
         Task currTask;
         int taskNameStart = "todo ".length();
         String taskName = line.substring(taskNameStart);
+        currTask = new ToDo(taskName);
+        list[Task.getTaskListSize() - 1] = currTask;
+    }
+
+    private static void makeExistingToDo(String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "[T][ ] ".length();
+        String taskName  = line.substring(taskNameStart);
         currTask = new ToDo(taskName);
         list[Task.getTaskListSize() - 1] = currTask;
     }
@@ -256,6 +278,16 @@ public class Meow {
         list[Task.getTaskListSize() - 1] = currTask;
     }
 
+    private static void makeExistingDeadline(String line, Task[] list) {
+        Task currTask;
+        int taskNameStart = "[D][ ] ".length();
+        int taskNameEnd = line.indexOf('(');
+        String taskName  = line.substring(taskNameStart, taskNameEnd);
+        String by = line.substring(line.indexOf(':') + 1, line.indexOf(')'));
+        currTask = new Deadline(taskName, by);
+        list[Task.getTaskListSize() - 1] = currTask;
+    }
+
     public static void openingMsg() {
         String meow = " /\\_/\\ \n"
                 + "( o.o ) \n"
@@ -265,6 +297,45 @@ public class Meow {
         System.out.println("Please leave some tuna before u leave. Meow");
         System.out.println(LINE_SEPARATOR);
     }
+
+    // converts the string from output file into tasks
+    private static void readTask(String fileTxt, Task[] list) {
+//        String subString = fileTxt;
+        int beginDex = 0;
+        int endDex = 0;
+        String[] tasks = fileTxt.split("\n");
+        for (String task : tasks) {
+            // insert code to read each line
+
+            if (task.charAt(1) == 'D') {
+                makeExistingDeadline(task, list);
+            } else if (task.charAt(1) == 'E') {
+                makeExistingEvent(task, list);
+            } else if (task.charAt(1) == 'T') {
+                makeExistingToDo(task, list);
+            }
+        }
+    }
+
+    private static String readFile() throws FileNotFoundException {
+        String fileTxt = "";
+        try {
+            FileReader in = new FileReader(outputFilePath);
+            // read output file char by char
+            int currChar;
+            while ((currChar = in.read()) != -1) {
+                fileTxt = fileTxt + (char)currChar;
+            }
+            System.out.println(fileTxt);
+            in.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File " + outputFilePath + " is not found");
+        } catch (IOException ioe) {
+            System.out.println("I/O Exception error");
+        }
+        return fileTxt;
+    }
+
 
     private static void updateFile(Task[] list) throws IOException {
         FileWriter out = new FileWriter(outputFilePath);
@@ -296,6 +367,11 @@ public class Meow {
 
     public static void main(String[] args) {
         openingMsg();
+        try {
+            readFile();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("output file not found");
+        }
         Task[] list = new Task[100];
         taskList(list);
 
