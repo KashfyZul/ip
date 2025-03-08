@@ -57,4 +57,13 @@ public class Task {
         taskListSize = num;
     }
 
+    public void printTask() {
+        System.out.println("Task is of unknown type");
+    }
+
+    public void printTaskAdded() {
+        System.out.println("Meowss. Added this task: ");
+        printTask();
+    }
+
 }

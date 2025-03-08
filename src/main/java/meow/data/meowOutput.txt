@@ -1,2 +1,3 @@
-[D][X] abc (by: 9pm)
-[E][ ] 987 (from: 9am to: 7pm)
+[T][ ] eat
+[D][ ] finish eating (by: 8pm)
+[T][X] finish assignment

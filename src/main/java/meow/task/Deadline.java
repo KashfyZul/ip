@@ -3,6 +3,7 @@ package meow.task;
 public class Deadline extends Task {
     private String by;
 
+    @Override
     public void printTask() {
         System.out.println("[" + this.getTaskType() + "]"
                 + "[" + this.getStatusIcon() + "] "
@@ -17,15 +18,10 @@ public class Deadline extends Task {
                 + "(by:" + this.by + ")");
     }
 
-    public void printTaskAdded() {
-        System.out.println("Meowss. Added this task: ");
-        printTask();
-    }
-
     public Deadline(String taskName, String by) {
         super(taskName);
         this.by = by;
         this.setTaskType('D');
-        this.printTaskAdded();
+//        this.printTaskAdded();
     }
 }

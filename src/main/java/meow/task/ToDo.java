@@ -2,6 +2,7 @@ package meow.task;
 
 public class ToDo extends Task {
 
+    @Override
     public void printTask() {
         System.out.println("[" + this.getTaskType() + "]"
                 + "[" + this.getStatusIcon() + "] "
@@ -14,14 +15,9 @@ public class ToDo extends Task {
                 + this.getTaskName());
     }
 
-    public void printTaskAdded() {
-        System.out.println("Meowss. Added this task: ");
-        printTask();
-    }
-
     public ToDo(String taskName) {
         super(taskName);
         this.setTaskType('T');
-        this.printTaskAdded();
+//        this.printTaskAdded();
     }
 }
