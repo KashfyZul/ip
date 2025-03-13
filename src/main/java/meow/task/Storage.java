@@ -6,10 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Contains methods to handle reading from and writing to the output text file
+ */
 public class Storage {
 
     static final String outputFilePath = "C:/Users/cyber/Documents/ip/src/main/java/meow/data/meowOutput.txt";
 
+    /**
+     * Reads file and returns the text file as a String.
+     *
+     * @return text from output file as a String.
+     * @throws FileNotFoundException if output file is not found.
+     */
     public static String readFile() throws FileNotFoundException {
         String fileTxt = "";
         try {
@@ -28,7 +37,12 @@ public class Storage {
         return fileTxt;
     }
 
-
+    /**
+     * Updates output file based on current TaskList.
+     *
+     * @param list the TaskList containing all existing Tasks.
+     * @throws IOException
+     */
     public static void updateFile(TaskList list) throws IOException {
         FileWriter out = new FileWriter(outputFilePath);
         String output = updateOutputList(list);
@@ -36,6 +50,12 @@ public class Storage {
         out.close();
     }
 
+    /**
+     * Returns a string that will be written to the output file
+     *
+     * @param list the TaskList containing all existing Tasks.
+     * @return text to be written to the output file.
+     */
     public static String updateOutputList(TaskList list) {
         String output = "";
         ArrayList<Task> tasks = list.getTasks();

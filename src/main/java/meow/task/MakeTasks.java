@@ -2,8 +2,18 @@ package meow.task;
 
 import java.util.ArrayList;
 
+/**
+ * Contains all methods to add tasks to a specified TaskList
+ */
 public class MakeTasks {
 
+    /**
+     * Identifies an Event Task from a string (previously input by user).
+     * Adds this Event Task to a specified TaskList
+     *
+     * @param line a String containing information about the Event to be added
+     * @param list the TaskList which the Event is to be added to
+     */
     public static void makeNewEvent(String line, TaskList list) {
         Task currTask;
         int taskNameStart = "event ".length();
@@ -18,6 +28,13 @@ public class MakeTasks {
         currTask.printTaskAdded();
     }
 
+    /**
+     * Identifies an Event Task from a string (read from the output txt file).
+     * Adds this Event Task to a specified TaskList
+     *
+     * @param line a String containing information about the Event to be added
+     * @param list the TaskList which the Event is to be added to
+     */
     public static void makeExistingEvent (String line, TaskList list) {
         Task currTask;
         int taskNameStart = "[E][ ] ".length();
@@ -30,6 +47,13 @@ public class MakeTasks {
         tasks.add(currTask);
     }
 
+    /**
+     * Identifies a ToDo Task from a string (previously input by user).
+     * Adds this ToDo Task to a specified TaskList
+     *
+     * @param line a String containing information about the ToDo to be added
+     * @param list the TaskList which the ToDo is to be added to
+     */
     public static void makeNewToDo(String line, TaskList list) {
         Task currTask;
         int taskNameStart = "todo ".length();
@@ -40,6 +64,13 @@ public class MakeTasks {
         currTask.printTaskAdded();
     }
 
+    /**
+     * Identifies a ToDo Task from a string (read from the output txt file).
+     * Adds this ToDo Task to a specified TaskList
+     *
+     * @param line a String containing information about the ToDo to be added
+     * @param list the TaskList which the ToDo is to be added to
+     */
     public static void makeExistingToDo(String line, TaskList list) {
         Task currTask;
         int taskNameStart = "[T][ ] ".length();
@@ -49,6 +80,13 @@ public class MakeTasks {
         tasks.add(currTask);
     }
 
+    /**
+     * Identifies a Deadline Task from a string (previously input by user).
+     * Adds this Deadline Task to a specified TaskList
+     *
+     * @param line a String containing information about the Deadline to be added
+     * @param list the TaskList which the Deadline is to be added to
+     */
     public static void makeNewDeadline(String line, TaskList list) {
         Task currTask;
         int taskNameStart = "deadline ".length();
@@ -61,6 +99,13 @@ public class MakeTasks {
         currTask.printTaskAdded();
     }
 
+    /**
+     * Identifies a Deadline Task from a string (read from the output txt file).
+     * Adds this Deadline Task to a specified TaskList
+     *
+     * @param line a String containing information about the Deadline to be added
+     * @param list the TaskList which the Deadline is to be added to
+     */
     public static void makeExistingDeadline(String line, TaskList list) {
         Task currTask;
         int taskNameStart = "[D][ ] ".length();
