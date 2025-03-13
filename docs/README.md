@@ -11,7 +11,7 @@ Meow is a fun and intuitive task management system to help you keep track of you
 Adds a task of the "Deadline" type. 
 
 This task must contain: 
-- taskName
+- `taskName`
 - `deadline`: due date of this task
 
 Example: `deadline submit assignment /by 11pm`
@@ -24,7 +24,7 @@ Example: `deadline submit assignment /by 11pm`
 Adds a task of the "Event" type.
 
 This task must contain:
-- taskName
+- `taskName`
 - `start time/day/date`: the starting time of this event
 - `end time/day/date`: the ending time of this event
 
@@ -38,7 +38,7 @@ Example: `event CS2113 Lecture /from 4pm /to 6pm`
 Adds a task of the "ToDo" type.
 
 This task must contain:
-- taskName
+- `taskName`
 
 Example: `todo drink water`
 
