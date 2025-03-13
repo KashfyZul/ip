@@ -25,7 +25,10 @@ public class Meow {
         list = new TaskList();
     }
 
-
+    /**
+     * Accepts user input and provides various output based on user input
+     *
+     */
     public static void taskList() {
         System.out.println("Type to add items to the list! add tuna to exit!");
         String taskType;
@@ -106,6 +109,9 @@ public class Meow {
         }
     }
 
+    /**
+     * Initialises program, reads data from output file
+     */
     public void runMeow() {
         ui.openingMsg();
         try {
