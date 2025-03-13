@@ -1,3 +1,4 @@
 [T][ ] eat
+[E][X] dinner (from: 6pm to: 7pm)
 [D][ ] finish eating (by: 8pm)
-[T][X] finish assignment
+[D][X] eat sahur (by: 6am)
