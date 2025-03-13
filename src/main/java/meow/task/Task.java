@@ -1,5 +1,8 @@
 package meow.task;
 
+/**
+ * Represents a Task as desribed by the user.
+ */
 public class Task {
     private String taskName;
     private char taskType;
@@ -7,6 +10,9 @@ public class Task {
     private int taskNumber;
     private static int taskListSize = 0;
 
+    /**
+     * Constructor for a new Task.
+     */
     public Task (String taskName) {
         this.taskName = taskName;
         this.isDone = false;
