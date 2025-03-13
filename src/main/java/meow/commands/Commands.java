@@ -65,6 +65,24 @@ public class Commands {
         System.out.println(LINE_SEPARATOR);
     }
 
+    public static TaskList find(String line, TaskList list) {
+        String keyword = line.split(" ")[1]; // take second word in line
+        // iterate through the entire list of tasks
+        ArrayList<Task> tasks = list.getTasks();
+        TaskList matchingList = new TaskList();
+        ArrayList<Task> matchingTasks = matchingList.getTasks();
+        for (Task task : tasks) {
+            String taskName = task.getTaskName();
+            String[] taskWords = taskName.split(" ");
+            for (String word : taskWords) {
+                if (word.equals(keyword)) {
+                    matchingTasks.add(task);
+                    break;
+                }
+            }
+        }
+        return matchingList;
+    }
 
     private static String stringAnyTask(Task taskToMark) {
         // print out the task once marked/unmarked
