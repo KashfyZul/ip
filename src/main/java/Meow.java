@@ -67,6 +67,14 @@ public class Meow {
                     break;
                 }
                 continue;
+            } else if (line.startsWith("find")) {
+                TaskList matchingList = Commands.find(line, list);
+                Commands.listAllTasks(matchingList);
+                System.out.println(LINE_SEPARATOR);
+                if (ui.updateFileWithCatch(storage, list)) {
+                    break;
+                }
+                continue;
             } else if (line.equals(EXIT_PHRASE)) {
                 System.out.println("Meow. See you!");
                 System.out.println(LINE_SEPARATOR);

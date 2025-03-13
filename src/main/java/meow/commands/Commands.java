@@ -86,8 +86,7 @@ public class Commands {
         System.out.println(LINE_SEPARATOR);
     }
 
-<<<<<<< Updated upstream
-=======
+
     /**
      * Takes in a String, line (input by the user).
      * Identifies keyword specified by the user (in line).
@@ -116,7 +115,6 @@ public class Commands {
         }
         return matchingList;
     }
->>>>>>> Stashed changes
 
 
     private static String stringAnyTask(Task taskToMark) {
