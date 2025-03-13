@@ -1,4 +1,6 @@
-[T][ ] eat
-[E][X] dinner (from: 6pm to: 7pm)
+[T][X] eat
+[E][ ] dinner (from: 6pm to: 7pm)
 [D][ ] finish eating (by: 8pm)
-[D][X] eat sahur (by: 6am)
+[D][ ] submit assignment (by: 11pm)
+[E][ ] CS2113 Lecture (from: 4pm to: 6pm)
+[T][ ] drink water
