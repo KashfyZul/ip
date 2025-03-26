@@ -43,6 +43,9 @@ public class MakeTasks {
         String from = line.substring(line.indexOf(':') + 1, line.lastIndexOf(':') - 3);
         String to = line.substring(line.lastIndexOf(':') + 1, line.lastIndexOf(')'));
         currTask = new Event(taskName, from, to);
+        if (line.startsWith("[E][X")) {
+            currTask.setDone();
+        }
         ArrayList<Task> tasks = list.getTasks();
         tasks.add(currTask);
     }
@@ -76,6 +79,9 @@ public class MakeTasks {
         int taskNameStart = "[T][ ] ".length();
         String taskName  = line.substring(taskNameStart);
         currTask = new ToDo(taskName);
+        if (line.startsWith("[T][X")) {
+            currTask.setDone();
+        }
         ArrayList<Task> tasks = list.getTasks();
         tasks.add(currTask);
     }
@@ -113,6 +119,9 @@ public class MakeTasks {
         String taskName  = line.substring(taskNameStart, taskNameEnd);
         String by = line.substring(line.indexOf(':') + 1, line.indexOf(')'));
         currTask = new Deadline(taskName, by);
+        if (line.startsWith("[D][X")) {
+            currTask.setDone();
+        }
         ArrayList<Task> tasks = list.getTasks();
         tasks.add(currTask);
     }

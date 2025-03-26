@@ -39,6 +39,6 @@ public class Deadline extends Task {
         super(taskName);
         this.by = by;
         this.setTaskType('D');
-//        this.printTaskAdded();
     }
+
 }

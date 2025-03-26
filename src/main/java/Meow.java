@@ -19,9 +19,9 @@ public class Meow {
     public static TaskList list;
     private static Ui ui;
 
-    public Meow() {
+    public Meow(String outputFilePath) {
         ui = new Ui();
-        storage = new Storage();
+        storage = new Storage(outputFilePath);
         list = new TaskList();
     }
 
@@ -38,7 +38,7 @@ public class Meow {
         try {
             ui.readTask(storage.readFile(), list);
         } catch (FileNotFoundException fnfe) {
-            System.out.println("Output txt file not found");
+            System.out.println("Output txt file not found, creating new output file");
         }
 
         System.out.println(LINE_SEPARATOR);
@@ -69,7 +69,11 @@ public class Meow {
                 continue;
             } else if (line.startsWith("find")) {
                 TaskList matchingList = Commands.find(line, list);
-                Commands.listAllTasks(matchingList);
+                if (matchingList.getTasks().isEmpty()) {
+                    System.out.println("No matching tasks found :(");
+                } else {
+                    Commands.listAllTasks(matchingList);
+                }
                 System.out.println(LINE_SEPARATOR);
                 if (ui.updateFileWithCatch(storage, list)) {
                     break;
@@ -123,6 +127,6 @@ public class Meow {
     }
 
     public static void main(String[] args) {
-        new Meow().runMeow();
+        new Meow("./meowOutput.txt").runMeow();
     }
 }
